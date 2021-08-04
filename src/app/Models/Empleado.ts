@@ -1,4 +1,5 @@
 export class Empleado {
+    id_empleado:number|null;
     nombre:String;
     apellidos:String;
     telefono:String;
@@ -8,6 +9,7 @@ export class Empleado {
     administrador:boolean;
 
     constructor() {
+        this.id_empleado=null;
         this.nombre="";
         this.apellidos="";
         this.telefono="";
