@@ -12,6 +12,7 @@ import { AgregarMascotaComponent } from './Mascota/agregar-mascota/agregar-masco
 import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
 import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-mascota.component';
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
+import { Rol } from './Models/rol';
 import { AuthGuard } from './Services/auth.guard';
 import { ListadoTipoComponent } from './Tipo/listado-tipo/listado-tipo.component';
 import { ListadoVentaComponent } from './Venta/listado-venta/listado-venta.component';
@@ -28,59 +29,73 @@ const routes: Routes = [
   {
     path: 'ListadoEmpleados',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: ListadoEmpleadoComponent
   },
   {
     path: 'AltaEmpleado',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: AgregarEmpleadoComponent
   },
   {
     path: 'ModificarEmpleado',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: ModificarEmpleadoComponent
   },
   {
     path: 'BajaEmpleados',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: BajaEmpleadoComponent
   },
   {
     path: 'ListadoTipo',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: ListadoTipoComponent
   },
   {
     path: 'ListadoMascotas',
+    canActivate: [AuthGuard],
+    data: { roles: [Rol.User, Rol.Admin]},
     component: ListadoMascotaComponent
   },
   {
     path: 'AltaMascota',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: AgregarMascotaComponent
   },
   {
     path: 'ModificarMascota',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: ModificarMascotaComponent
   },
   {
     path: 'EliminarMascotas',
     canActivate:[AuthGuard],
+    data: { roles: Rol.Admin},
     component: EliminarMascotaComponent
   },
   {
     path: 'ListadoClientes',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: ListadoClienteComponent
   },
   {
     path: 'ModificarCliente',
     canActivate: [AuthGuard],
+    data: { roles: Rol.Admin},
     component: ModificarClienteComponent
   },
   {
     path: 'ListadoVentas',
+    canActivate: [AuthGuard],
+    data: { roles: [Rol.User, Rol.Admin]},
     component: ListadoVentaComponent
   },
   {
