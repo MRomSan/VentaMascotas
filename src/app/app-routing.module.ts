@@ -1,71 +1,92 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AgregarClienteComponent } from './Cliente/agregar-cliente/agregar-cliente.component';
 import { ListadoClienteComponent } from './Cliente/listado-cliente/listado-cliente.component';
 import { ModificarClienteComponent } from './Cliente/modificar-cliente/modificar-cliente.component';
 import { AgregarEmpleadoComponent } from './Empleado/agregar-empleado/agregar-empleado.component';
+import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.component';
 import { ListadoEmpleadoComponent } from './Empleado/listado-empleado/listado-empleado.component';
 import { ModificarEmpleadoComponent } from './Empleado/modificar-empleado/modificar-empleado.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { AgregarMascotaComponent } from './Mascota/agregar-mascota/agregar-mascota.component';
+import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
 import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-mascota.component';
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
-import { AgregarTipoComponent } from './Tipo/agregar-tipo/agregar-tipo.component';
+import { AuthGuard } from './Services/auth.guard';
 import { ListadoTipoComponent } from './Tipo/listado-tipo/listado-tipo.component';
-import { ModificarTipoComponent } from './Tipo/modificar-tipo/modificar-tipo.component';
 import { ListadoVentaComponent } from './Venta/listado-venta/listado-venta.component';
 
 const routes: Routes = [
   {
-    path: 'listadoEmpleado',
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'ListadoEmpleados',
+    canActivate: [AuthGuard],
     component: ListadoEmpleadoComponent
   },
   {
-    path: 'agregarEmpleado',
+    path: 'AltaEmpleado',
+    canActivate: [AuthGuard],
     component: AgregarEmpleadoComponent
   },
   {
-    path: 'modificarEmpleado',
+    path: 'ModificarEmpleado',
+    canActivate: [AuthGuard],
     component: ModificarEmpleadoComponent
   },
   {
-    path: 'listadoTipo',
+    path: 'BajaEmpleados',
+    canActivate: [AuthGuard],
+    component: BajaEmpleadoComponent
+  },
+  {
+    path: 'ListadoTipo',
+    canActivate: [AuthGuard],
     component: ListadoTipoComponent
   },
   {
-    path: 'agregarTipo',
-    component: AgregarTipoComponent
-  },
-  {
-    path: 'modificarTipo',
-    component: ModificarTipoComponent
-  },
-  {
-    path: 'listadoMascota',
+    path: 'ListadoMascotas',
     component: ListadoMascotaComponent
   },
   {
-    path: 'agregarMascota',
+    path: 'AltaMascota',
+    canActivate: [AuthGuard],
     component: AgregarMascotaComponent
   },
   {
-    path: 'modificarMascota',
+    path: 'ModificarMascota',
+    canActivate: [AuthGuard],
     component: ModificarMascotaComponent
   },
   {
-    path: 'listadoCliente',
+    path: 'EliminarMascotas',
+    canActivate:[AuthGuard],
+    component: EliminarMascotaComponent
+  },
+  {
+    path: 'ListadoClientes',
+    canActivate: [AuthGuard],
     component: ListadoClienteComponent
   },
   {
-    path: 'agregarCliente',
-    component: AgregarClienteComponent
-  },
-  {
-    path: 'modificarCliente',
+    path: 'ModificarCliente',
+    canActivate: [AuthGuard],
     component: ModificarClienteComponent
   },
   {
-    path: 'listadoVenta',
+    path: 'ListadoVentas',
     component: ListadoVentaComponent
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
 ];
 

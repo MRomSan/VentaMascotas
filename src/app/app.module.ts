@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AgregarComponent } from './Cliente/agregar/agregar.component';
-import { ListadoComponent } from './Cliente/listado/listado.component';
-import { ModificarComponent } from './Cliente/modificar/modificar.component';
 import { ValidarDniDirective } from './Validators/validar-dni.directive';
 import { ListadoEmpleadoComponent } from './Empleado/listado-empleado/listado-empleado.component';
 import { AgregarEmpleadoComponent } from './Empleado/agregar-empleado/agregar-empleado.component';
@@ -21,12 +20,16 @@ import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-masco
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
 import { ListadoVentaComponent } from './Venta/listado-venta/listado-venta.component';
 
+import { authInterceptorProviders } from './Helpers/auth.interceptor';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './Services/auth.guard';
+import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
+import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    AgregarComponent,
-    ListadoComponent,
-    ModificarComponent,
     ValidarDniDirective,
     ListadoEmpleadoComponent,
     AgregarEmpleadoComponent,
@@ -40,13 +43,19 @@ import { ListadoVentaComponent } from './Venta/listado-venta/listado-venta.compo
     AgregarMascotaComponent,
     ListadoMascotaComponent,
     ModificarMascotaComponent,
-    ListadoVentaComponent
+    ListadoVentaComponent,
+    BajaEmpleadoComponent,
+    LoginComponent,
+    HomeComponent,
+    EliminarMascotaComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

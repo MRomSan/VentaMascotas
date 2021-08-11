@@ -1,3 +1,76 @@
+<header class="fixed-top bg-light px-5 rounded-3 d-flex flex-column justify-content-center">
+	<h1>{{title}}</h1>
+	<p>La app de venta de Mascotas</p>
+</header>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Menú</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="home">Inicio</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="mostrarBotonesAdmin">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Empleados
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="ListadoEmpleados">Listado</a></li>
+            <li><a class="dropdown-item" routerLink="AltaEmpleado">Alta</a></li>
+            <li><a class="dropdown-item" routerLink="ModificarEmpleado">Modificación</a></li>
+            <li><a class="dropdown-item" routerLink="BajaEmpleados">Baja</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown" *ngIf="mostrarBotonesAdmin">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Mascotas
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="ListadoMascotas">Listado</a></li>
+            <li><a class="dropdown-item" routerLink="AltaMascota">Alta</a></li>
+            <li><a class="dropdown-item" routerLink="ModificarMascota">Modificación</a></li>
+            <li><a class="dropdown-item" routerLink="EliminarMascotas">Eliminar</a></li>
+          </ul>
+        </li>
+        <li class="nav-item" *ngIf="mostrarBotonesEmpleado">
+          <a class="nav-link" routerLink="ListadoMascotas">Mascotas</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="mostrarBotonesAdmin">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Clientes
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="ListadoClientes">Listado</a></li>
+            <li><a class="dropdown-item" routerLink="ModificarCliente">Modificación</a></li>
+          </ul>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" routerLink="ListadoVentas">Histórico de Ventas</a>
+        </li>
+      </ul>
 
+      <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="login">Login</a>
+        </li>
+      </ul>
+  
+      <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link disabled">{{ username }}</a>
+        </li>
+        <li class="nav-item">
+          <a href class="nav-link" (click)="logout()">LogOut</a>
+        </li>
+      </ul>
 
+    </div>
+  </div>
+</nav>
+
+<div class="main container">
 <router-outlet></router-outlet>
+</div>
