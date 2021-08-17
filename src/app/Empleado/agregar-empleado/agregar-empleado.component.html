@@ -1,1 +1,69 @@
-<p>agregar-empleado works!</p>
+<div *ngIf="!!message" class="mensaje-resultado {{ messageClass }}" role="alert">
+  {{ message }}
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h2>Alta de Empleado</h2>
+  </div>
+  <div class="card-body">
+    <form name="formAlta" (submit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+      <div class="row form-group">
+        <div class="col-md-4">
+          <label for="nombre">Nombre</label>
+          <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control" [(ngModel)]="formAlta.nombre" #nombre="ngModel" 
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" required />
+          <div class="alert alert-danger" role="alert" *ngIf="nombre.errors && f.submitted">
+            <div *ngIf="nombre.errors.required">El Nombre es obligatorio</div>
+            <div *ngIf="nombre.errors.pattern">El Nombre sólo admite letras</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="apellidos">Apellidos</label>
+          <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" class="form-control" [(ngModel)]="formAlta.apellidos" #apellidos="ngModel" 
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" required />
+          <div class="alert alert-danger" role="alert" *ngIf="apellidos.errors && f.submitted">
+            <div *ngIf="apellidos.errors.required">El Apellido es obligatorio</div>
+            <div *ngIf="apellidos.errors.pattern">El Apellido sólo admite letras</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="telefono">Teléfono</label>
+          <input type="text" name="telefono" id="telefono" placeholder="Teléfono" class="form-control" [(ngModel)]="formAlta.telefono" #telefono="ngModel" 
+            pattern="[0-9]+" minlength="9" maxlength="9" required />
+          <div class="alert alert-danger" role="alert" *ngIf="telefono.errors && f.submitted">
+            <div *ngIf="telefono.errors.required">El Teléfono es obligatorio</div>
+            <div *ngIf="telefono.errors.minlength">El Teléfono debe tener 9 dígitos</div>
+            <div *ngIf="telefono.errors.pattern">El telefono sólo admite números</div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group pt-2">
+        <div class="col-md-6">
+          <label for="username">Usuario</label>
+          <input type="text" name="username" id="username" placeholder="Nombre de Usuario" class="form-control" [(ngModel)]="formAlta.username" #username="ngModel" 
+            pattern="[a-z]+" maxlength="6" required usernameUnico />
+          <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
+            <div *ngIf="username.errors.required">El Usuario es obligatorio</div>
+            <div *ngIf="username.errors.pattern">El Usuario sólo admite caracteres en minúscula</div>
+            <div *ngIf="username.errors.usernameUnico">El Usuario ya está en uso</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="password">Contraseña</label>
+          <input type="text" name="password" id="password" placeholder="Contraseña" class="form-control" [(ngModel)]="formAlta.password" #password="ngModel" 
+            pattern="[a-zA-Z0-9]+" minlength="6" maxlength="12" required />
+          <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
+            <div *ngIf="password.errors.required">La Contraseña es obligatoria</div>
+            <div *ngIf="password.errors.minlength">La Contraseña debe tener entre 6 y 12 caracteres</div>
+            <div *ngIf="password.errors.pattern">La Contraseña sólo admite caracteres y números</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group pt-2">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="reset" class="btn btn-secondary mx-2">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

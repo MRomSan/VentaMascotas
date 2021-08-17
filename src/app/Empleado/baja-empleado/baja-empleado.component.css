@@ -1,0 +1,16 @@
+.message {
+    text-align: center;
+}
+
+.sticky-thead{
+	position: -webkit-sticky;
+	position: sticky;
+	top: 19.9em;
+	vertical-align: bottom;
+	overflow: hidden;
+}
+
+#cabecera-info{
+	top: 15.5em;
+	height: 4.4em;
+}

@@ -1,12 +1,12 @@
-<div class="col-md-12 card">
-  <div class="card-body">
+<div class="card col-md-6 offset-md-3 mt-3">
+  <div class="card-body bg-light">
     <div class="text-center pb-2">
-    <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="rounded-circle"
-      width="150"
-    />
+      <img
+        id="profile-img"
+        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+        class="rounded-circle"
+        width="150"
+      />
     </div>
     <form
       *ngIf="!isLoggedIn"
@@ -54,8 +54,8 @@
           role="alert"
           *ngIf="password.errors && f.submitted"
         >
-          <div *ngIf="password.errors.required">La Constraseña es obligatoria</div>
-          <div *ngIf="password.errors.maxlength">
+          <div *ngIf="password.errors.required">La Contraseña es obligatoria</div>
+          <div *ngIf="password.errors.minlength">
             La Contraseña debe tener un mínimo de 6 caracteres
           </div>
           <div *ngIf="password.errors.maxlength">
@@ -63,7 +63,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group pt-2">
         <button class="btn btn-primary btn-block">
           Login
         </button>

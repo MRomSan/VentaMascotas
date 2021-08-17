@@ -26,6 +26,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './Services/auth.guard';
 import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
 import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.component';
+import { NombreUsuarioUnicoDirective } from './Validators/nombre-usuario-unico.directive';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.co
     BajaEmpleadoComponent,
     LoginComponent,
     HomeComponent,
-    EliminarMascotaComponent
+    EliminarMascotaComponent,
+    NombreUsuarioUnicoDirective
   ],
   imports: [
     BrowserModule,

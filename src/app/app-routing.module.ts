@@ -12,7 +12,7 @@ import { AgregarMascotaComponent } from './Mascota/agregar-mascota/agregar-masco
 import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
 import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-mascota.component';
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
-import { Rol } from './Models/rol';
+import { Rol } from './Models/Rol';
 import { AuthGuard } from './Services/auth.guard';
 import { ListadoTipoComponent } from './Tipo/listado-tipo/listado-tipo.component';
 import { ListadoVentaComponent } from './Venta/listado-venta/listado-venta.component';

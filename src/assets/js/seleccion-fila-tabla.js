@@ -1,5 +1,6 @@
 function seleccionFilas(elemento,multiSeleccion,datosARecoger) {
     var id = elemento.find(".id").html();
+
     // Selecciono la fila de la tabla, y si ya está seleccionada le quito la selección
     if(elemento.hasClass("selected")) {
         elemento.removeClass("table-primary");
@@ -24,7 +25,7 @@ function seleccionFilas(elemento,multiSeleccion,datosARecoger) {
         // Recojo el DNI a eliminar
         datosARecoger.push(id);
     }
-    
+
     // Si hay fila seleccionada
     if($(".tabla-seleccionable tbody").find(".selected").length > 0){
         // Habilito el botón
@@ -33,17 +34,20 @@ function seleccionFilas(elemento,multiSeleccion,datosARecoger) {
         // Deshabilito el botón
         deshabilitarBoton(true);
     }
-    
+
     // Meto los IDs a eliminar en un campo oculto del formulario al que llama el botón
-    $(".recoge-datos").val(datosARecoger);
+    $(".recoge-datos").val(datosARecoger);    
 }
 
 function deshabilitarBoton(condicion) {
 	if(condicion == true) {
+        $(".desbloquear-btn").blur();
 		$(".desbloquear-btn").attr("aria-disabled", true);
 		$(".desbloquear-btn").addClass("disabled");
+        $(".desbloquear-btn").attr("tabindex", -1);
 	} else {
 		$(".desbloquear-btn").removeAttr("aria-disabled");
 		$(".desbloquear-btn").removeClass("disabled");
+        $(".desbloquear-btn").removeAttr("tabindex");
 	}
 }
