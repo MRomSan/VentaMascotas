@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+.message {
+    text-align: center;
+}
+
+.sticky-thead{
+	position: -webkit-sticky;
+	position: sticky;
+	top: 15.9em;
+	vertical-align: bottom;
+	overflow: hidden;
+}
+
+#cabecera-info{
+	top: 11.5em;
+	height: 4.4em;
+}

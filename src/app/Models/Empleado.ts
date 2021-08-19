@@ -1,3 +1,5 @@
+import { Rol } from "./Rol";
+
 export class Empleado {
     id_usuario:number|null;
     nombre:String;
@@ -6,6 +8,7 @@ export class Empleado {
     username:String;
     password:String;
     alta:boolean;
+    roles:any;
 
     constructor() {
         this.id_usuario=null;
@@ -15,5 +18,6 @@ export class Empleado {
         this.username="";
         this.password="";
         this.alta=true;
+        this.roles=[];
     }
 }

@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
   rol:string = '';
+  message:string|null="";
+  messageClass:string|null="";
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
@@ -30,6 +32,26 @@ export class LoginComponent implements OnInit {
         this.rol = 'USUARIO';
       }
     }
+    if(!!localStorage.getItem("message")) {
+      this.lanzarMensaje(localStorage.getItem("message"), localStorage.getItem("messageClass"));
+    }
+    localStorage.clear();
+  }
+
+  lanzarMensaje(message:string|null, messageClass:string|null) {
+    this.message=message;
+    this.messageClass=messageClass;
+    setTimeout(()=>{this.ocultarMensaje()}, 4000);
+    setTimeout(()=>{this.borrarMensaje()}, 5500);
+  }
+
+  ocultarMensaje() {
+    $(".mensaje-resultado").fadeOut(1500);
+  }
+
+  borrarMensaje() {
+    this.message="";
+    this.messageClass="";
   }
 
   onSubmit(): void {

@@ -15,6 +15,7 @@ export class BajaEmpleadoComponent implements OnInit, AfterViewChecked {
   stateMessage = "Cargando datos...";
   message="";
   messageClass="";
+  dataFilter:string="";
 
   constructor(private http:EmpleadoService) {
     this.empleados = null;

@@ -28,4 +28,20 @@ export class EmpleadoService {
     return this.http.put<Empleado[]>(this.path + "empleado/baja", ids);
   }
 
+  listarEmpleados() {
+    return this.http.get<Empleado[]>(this.path + "empleados");
+  }
+
+  getDatosEmpleado(id:number) {
+    return this.http.get<Empleado>(this.path + "empleado/" + id);
+  }
+
+  updateEmpleado(e:Empleado) {
+    return this.http.put<Empleado>(this.path + "empleado/" + e.id_usuario, e);
+  }
+
+  updatePassword(newPassword:string, id:number) {
+    return this.http.put<Empleado>(this.path + "empleado/newpassword/" + id, newPassword);
+  }
+
 }

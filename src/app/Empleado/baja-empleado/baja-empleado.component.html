@@ -4,14 +4,16 @@
 
 <div class="px-3 px-md-0 bg-white sticky-top" id="cabecera-info">
 	<div class="d-flex flex-md-row" style="height: 100%;">
-		<div class="col-6 col-md-5 offset-md-1 d-flex justify-content-start align-self-end">
+		<div class="col-5 col-md-5 offset-md-1 d-flex justify-content-start align-self-end">
 			<p class="mb-0 pb-1 text-secondary">Seleccione los empleados a dar de baja</p>
 		</div>
-		<div class="col-6 col-md-5 d-flex justify-content-end align-items-center">
-      <!-- Botón de búsqueda aquí -->
+		<div class="col-7 col-md-5 d-flex justify-content-end align-items-center">
+      <div class="form-group mx-2">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="dataFilter">
+      </div>
 			<form name="formBajaEmpleado" (ngSubmit)="bajaEmpleados()" #f="ngForm" class="my-2">
         <input type="hidden" name="recoge-datos" class="recoge-datos" />
-        <button type="button" class="btn btn-primary desbloquear-btn disabled" id="btn-baja" data-bs-toggle="modal" data-bs-target="#bajaEmpleado" aria-disabled="true" tabindex="-1"><i class="fas fa-user-slash"></i> Baja Empleado</button>
+        <button type="button" class="btn btn-primary desbloquear-btn disabled" id="btn-baja" data-bs-toggle="modal" data-bs-target="#bajaEmpleado" aria-disabled="true" tabindex="-1"><i class="fas fa-user-slash"></i> Dar de baja</button>
       </form>
 		</div>
 	</div>
@@ -28,7 +30,7 @@
         </tr>
       </thead>
       <tbody *ngIf="empleados != null; else cargando">
-        <tr *ngFor="let empleado of empleados">
+        <tr *ngFor="let empleado of empleados | filter:dataFilter">
           <td class="id" style="display: none;">{{ empleado.id_usuario }}</td>
           <td>{{ empleado.nombre }}</td>
           <td>{{ empleado.apellidos }}</td>

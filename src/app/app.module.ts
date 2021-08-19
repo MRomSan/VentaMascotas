@@ -27,6 +27,8 @@ import { AuthGuard } from './Services/auth.guard';
 import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
 import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.component';
 import { NombreUsuarioUnicoDirective } from './Validators/nombre-usuario-unico.directive';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ModificarEmpleadoFormComponent } from './Empleado/modificar-empleado-form/modificar-empleado-form.component';
 
 @NgModule({
   declarations: [
@@ -49,13 +51,15 @@ import { NombreUsuarioUnicoDirective } from './Validators/nombre-usuario-unico.d
     LoginComponent,
     HomeComponent,
     EliminarMascotaComponent,
-    NombreUsuarioUnicoDirective
+    NombreUsuarioUnicoDirective,
+    ModificarEmpleadoFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    Ng2SearchPipeModule
   ],
   providers: [authInterceptorProviders, AuthGuard],
   bootstrap: [AppComponent]

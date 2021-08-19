@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-declare function seleccionFilas(elemento:any,multiSeleccion:boolean,datosARecoger:String[]):any;
+import { Router } from '@angular/router';
+import { Empleado } from 'src/app/Models/Empleado';
+import { Rol } from 'src/app/Models/Rol';
+import { EmpleadoService } from 'src/app/Services/empleado.service';
 
 @Component({
   selector: 'app-listado-empleado',
@@ -8,14 +10,93 @@ declare function seleccionFilas(elemento:any,multiSeleccion:boolean,datosARecoge
   styleUrls: ['./listado-empleado.component.css']
 })
 export class ListadoEmpleadoComponent implements OnInit {
+  empleados:Empleado[] | null;
+  stateMessage = "Cargando datos...";
+  dataFilter:string = "";
+  message:string|null="";
+  messageClass:string|null="";
+  empleadoBaja:Empleado|null=null;
 
-  constructor() { }
+  constructor(private http:EmpleadoService, private router:Router) {
+    this.empleados=null;
+  }
 
   ngOnInit(): void {
-    var datosARecoger:String[] = [];
-    $(".tabla-seleccionable").on("click", "tbody tr", function() {
-      seleccionFilas($(this),true,datosARecoger);
-    });
+    this.cargaDatosEmpleados();
+    if(!!localStorage.getItem("message")) {
+      this.lanzarMensaje(localStorage.getItem("message"), localStorage.getItem("messageClass"));
+    }
+    localStorage.clear();
+  }
+
+  cargaDatosEmpleados() {
+    this.http.listarEmpleados()
+    .subscribe(
+      datosEmpleados=>{
+        this.empleados=datosEmpleados;
+      },
+      ()=>{
+        this.stateMessage="Error al cargar los datos de empleados";
+      }
+    );
+  }
+
+  checkRolAdmin(empleado:Empleado):boolean {
+    for(let i = 0; i < empleado.roles.length; i++) {
+      if(empleado.roles[i].nombre==Rol.Admin) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  lanzarMensaje(message:string|null, messageClass:string|null) {
+    this.message=message;
+    this.messageClass=messageClass;
+    setTimeout(()=>{this.ocultarMensaje()}, 4000);
+    setTimeout(()=>{this.borrarMensaje()}, 5500);
+  }
+
+  ocultarMensaje() {
+    $(".mensaje-resultado").fadeOut(1500);
+  }
+
+  borrarMensaje() {
+    this.message="";
+    this.messageClass="";
+  }
+
+  nuevoEmpleado() {
+    localStorage.setItem("view", "ListadoEmpleados");
+    this.router.navigate(["AltaEmpleado"]);
+  }
+
+  modificarEmpleado(empleado:Empleado) {
+    if(empleado.id_usuario) {
+      localStorage.setItem("id", empleado.id_usuario.toString());
+    }
+    localStorage.setItem("view", "ListadoEmpleados");
+    this.router.navigate(["ModificarEmpleadoForm"]);
+  }
+
+  empleadoParaBaja(empleado:Empleado) {
+    this.empleadoBaja=empleado;
+    console.log(this.empleadoBaja);
+  }
+
+  darBajaEmpleado() {
+    if(this.empleadoBaja){
+      this.http.darBajaEmpleados(this.empleadoBaja.id_usuario)
+      .subscribe(
+        () => {
+          this.cargaDatosEmpleados();
+          this.lanzarMensaje("Baja realizada correctamente", "alert alert-success");
+        },
+        () => {
+          this.lanzarMensaje("Error al realizar la baja", "alert alert-danger");
+        }
+      );
+    }
   }
 
 }

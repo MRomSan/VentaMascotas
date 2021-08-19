@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Empleado } from 'src/app/Models/Empleado';
 import { EmpleadoService } from 'src/app/Services/empleado.service';
 
@@ -13,11 +14,18 @@ export class AgregarEmpleadoComponent implements OnInit {
   message="";
   messageClass="";
 
-  constructor(private http:EmpleadoService) {
+  constructor(private http:EmpleadoService, private router:Router) {
     this.formAlta = new Empleado();
   }
 
   ngOnInit(): void {
+  }
+
+  lanzarMensaje(message:string, messageClass:string) {
+    this.message=message;
+    this.messageClass=messageClass;
+    setTimeout(()=>{this.ocultarMensaje()}, 4000);
+    setTimeout(()=>{this.borrarMensaje()}, 5500);
   }
 
   ocultarMensaje() {
@@ -33,19 +41,20 @@ export class AgregarEmpleadoComponent implements OnInit {
     this.http.newEmpleado(this.formAlta)
     .subscribe(
       () => {
-        this.message="Empleado creado correctamente";
-        this.messageClass="alert alert-success";
-        setTimeout(()=>{this.ocultarMensaje()}, 4000);
-        setTimeout(()=>{this.borrarMensaje()}, 5500);
+        this.lanzarMensaje("Empleado creado correctamente", "alert alert-success");
         f.resetForm();
       },
       () => {
-        this.message="Error al crear el empleado";
-        this.messageClass="alert alert-danger";
-        setTimeout(()=>{this.ocultarMensaje()}, 4000);
-        setTimeout(()=>{this.borrarMensaje()}, 5500);
+        this.lanzarMensaje("Error al crear el empleado", "alert alert-danger");
       }
     );
   }
 
+  cancelarAlta() {
+    if(!!localStorage.getItem("view")) {
+      this.router.navigate([localStorage.getItem("view")]);
+    } else {
+      this.router.navigate(['home']);
+    }
+  }
 }
