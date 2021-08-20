@@ -13,9 +13,9 @@ import { AgregarMascotaComponent } from './Mascota/agregar-mascota/agregar-masco
 import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
 import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-mascota.component';
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
+import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.component';
 import { Rol } from './Models/Rol';
 import { AuthGuard } from './Services/auth.guard';
-import { ListadoTipoComponent } from './Tipo/listado-tipo/listado-tipo.component';
 import { ListadoVentaComponent } from './Venta/listado-venta/listado-venta.component';
 
 const routes: Routes = [
@@ -58,10 +58,10 @@ const routes: Routes = [
     component: BajaEmpleadoComponent
   },
   {
-    path: 'ListadoTipo',
+    path: 'TiposMascota',
     canActivate: [AuthGuard],
     data: {roles: Rol.Admin},
-    component: ListadoTipoComponent
+    component: TiposMascotaComponent
   },
   {
     path: 'ListadoMascotas',

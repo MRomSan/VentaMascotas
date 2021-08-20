@@ -29,6 +29,7 @@ import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.co
 import { NombreUsuarioUnicoDirective } from './Validators/nombre-usuario-unico.directive';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ModificarEmpleadoFormComponent } from './Empleado/modificar-empleado-form/modificar-empleado-form.component';
+import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ModificarEmpleadoFormComponent } from './Empleado/modificar-empleado-fo
     HomeComponent,
     EliminarMascotaComponent,
     NombreUsuarioUnicoDirective,
-    ModificarEmpleadoFormComponent
+    ModificarEmpleadoFormComponent,
+    TiposMascotaComponent
   ],
   imports: [
     BrowserModule,

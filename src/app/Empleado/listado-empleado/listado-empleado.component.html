@@ -8,9 +8,8 @@
       <div class="form-group mx-2">
         <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="dataFilter">
       </div>
-			<form name="formModifEmpleado" (ngSubmit)="nuevoEmpleado()" #f="ngForm" class="my-2">
-        <input type="hidden" name="recoge-datos" class="recoge-datos" />
-        <button type="submit" class="btn btn-primary" id="btn-modif"><i class="fas fa-user-plus"></i> Nuevo</button>
+			<form name="formNuevoEmpleado" (ngSubmit)="nuevoEmpleado()" #f="ngForm" class="my-2">
+        <button type="submit" class="btn btn-primary" id="btn-nuevo"><i class="fas fa-user-plus"></i> Nuevo</button>
       </form>
 		</div>
 	</div>
@@ -35,9 +34,9 @@
           <td>{{ empleado.apellidos }}</td>
           <td>{{ empleado.telefono }}</td>
           <td>{{ empleado.username }}</td>
-          <td><a [routerLink]="" (click)="modificarEmpleado(empleado)"><i class="fas fa-edit"></i></a></td>
+          <td><a [routerLink]="" (click)="modificarEmpleado(empleado)"><i class="fas fa-edit" alt="Modificar" title="Modificar"></i></a></td>
           <td *ngIf="empleado.alta==true && !checkRolAdmin(empleado); else baja">
-            <a [routerLink]="" (click)="empleadoParaBaja(empleado)" data-bs-toggle="modal" data-bs-target="#bajaEmpleado"><i class="fas fa-user-slash"></i></a>
+            <a [routerLink]="" (click)="empleadoParaBaja(empleado)" data-bs-toggle="modal" data-bs-target="#bajaEmpleado"><i class="fas fa-user-slash" alt="Dar de Baja" title="Dar de Baja"></i></a>
           </td>
           <ng-template #baja>
             <td></td>
