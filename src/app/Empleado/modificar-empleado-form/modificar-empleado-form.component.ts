@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MESSAGE_TIME_SHOWN, MESSAGE_TIME_RESET, MESSAGE_TIME_HIDING } from 'src/app/global-const';
 import { Empleado } from 'src/app/Models/Empleado';
 import { Rol } from 'src/app/Models/Rol';
 import { EmpleadoService } from 'src/app/Services/empleado.service';
@@ -22,7 +22,12 @@ export class ModificarEmpleadoFormComponent implements OnInit {
 
   constructor(private http:EmpleadoService, private router:Router, private tokenStorageService:TokenStorageService) {
     this.formModif = new Empleado();
-    this.lastView = localStorage.getItem("view");
+    this.lastView = null;
+    if(!!localStorage.getItem("view")){
+      this.lastView = localStorage.getItem("view");
+    } else {
+      this.router.navigate(['']);
+    }
     localStorage.removeItem("view");
   }
 
@@ -43,7 +48,8 @@ export class ModificarEmpleadoFormComponent implements OnInit {
         },
         () => {
           this.lanzarMensaje("Error al cargar los datos del empleado", "alert alert-danger");
-        });
+        }
+      );
     }
   }
 
@@ -69,12 +75,12 @@ export class ModificarEmpleadoFormComponent implements OnInit {
   lanzarMensaje(message:string, messageClass:string) {
     this.message=message;
     this.messageClass=messageClass;
-    setTimeout(()=>{this.ocultarMensaje()}, 4000);
-    setTimeout(()=>{this.borrarMensaje()}, 5500);
+    setTimeout(()=>{this.ocultarMensaje()}, MESSAGE_TIME_SHOWN);
+    setTimeout(()=>{this.borrarMensaje()}, MESSAGE_TIME_RESET);
   }
 
   ocultarMensaje() {
-    $(".mensaje-resultado").fadeOut(1500);
+    $(".mensaje-resultado").fadeOut(MESSAGE_TIME_HIDING);
   }
 
   borrarMensaje() {

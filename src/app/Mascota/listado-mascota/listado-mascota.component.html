@@ -1,1 +1,102 @@
-<p>listado-mascota works!</p>
+<div *ngIf="!!message" class="mensaje-resultado {{ messageClass }}" role="alert">
+  {{ message }}
+</div>
+
+<div class="px-3 px-md-0 bg-white sticky-top" id="cabecera-info">
+	<div class="d-flex flex-md-row" style="height: 100%;">
+		<div class="col-12 col-md-11 d-flex justify-content-end align-items-center">
+      <div class="form-group mx-2">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="dataFilter">
+      </div>
+			<form name="formNuevaMascota" (ngSubmit)="nuevaMascota()" #f="ngForm" class="my-2" *ngIf="interfazAdmin">
+        <button type="submit" class="btn btn-primary" id="btn-nuevo"><i class="fas fa-plus-circle"></i> Nuevo</button>
+      </form>
+      <button type="button" class="btn btn-primary desbloquear-btn disabled" id="btn-vender" aria-disabled="true" tabindex="-1" data-bs-toggle="modal" data-bs-target="#dniCliente" *ngIf="interfazEmpleado"><i class="fas fa-cash-register"></i> Vender</button>
+		</div>
+	</div>
+</div>
+<div class="d-flex flex-row">
+	<div class="col-12 col-md-10 offset-md-1">
+    <table class="table table-striped table-hover text-center tabla-seleccionable" id="tablaMascotas">
+      <thead class="table table-dark sticky-thead">
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Precio</th>
+          <th *ngIf="interfazAdmin">Modificar</th>
+          <th *ngIf="interfazAdmin">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="mascotas != null; else cargando">
+        <tr *ngFor="let mascota of mascotas | filter:dataFilter">
+          <td class="id" style="display: none;">{{ mascota.id_mascota }}</td>
+          <td>{{ mascota.nombre }}</td>
+          <td>{{ mascota.tipo.nombre }}</td>
+          <td>{{ mascota.precio }}</td>
+          <td *ngIf="interfazAdmin && mascota.venta==null; else vendida">
+            <a [routerLink]="" (click)="modificarMascota(mascota)"><i class="fas fa-edit" alt="Modificar" title="Modificar"></i></a>
+          </td>
+          <td *ngIf="interfazAdmin && mascota.venta==null">
+            <a [routerLink]="" (click)="mascotaParaEliminar(mascota)" data-bs-toggle="modal" data-bs-target="#eliminaMascota"><i class="fas fa-trash-alt" alt="Eliminar" title="Eliminar"></i></a>
+          </td>
+          <ng-template #vendida>
+            <td *ngIf="interfazAdmin"></td>
+            <td *ngIf="interfazAdmin"></td>
+          </ng-template>
+        </tr>
+      </tbody>
+      <ng-template #cargando>
+        <tbody>
+          <tr>
+            <td colspan="5" class="message" *ngIf="interfazAdmin">{{ stateMessage }}</td>
+            <td colspan="3" class="message" *ngIf="interfazEmpleado">{{ stateMessage }}</td>
+          </tr>
+        </tbody>
+      </ng-template>
+    </table>
+  </div>
+</div>
+
+<div class="modal" id="eliminaMascota" tabindex="-1" aria-labelledby="eliminaMascotaLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="eliminaMascotaLabel">Eliminar Mascota</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>¿Está seguro que desea eliminar la mascota seleccionada?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="eliminarMascota()">Sí</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="dniCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="dniClienteLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="dniClienteLabel">DNI Cliente</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<form name="formDNI" (submit)="fD.form.valid && buscarCliente()" #fD="ngForm" novalidate>
+			  <div class="modal-body">
+          <input type="text" name="dni" id="dni" placeholder="DNI" class="form-control" [(ngModel)]="formDNI.dni" #dni="ngModel" 
+            maxlength="9" required validarDni />
+          <div class="alert alert-danger" role="alert" *ngIf="dni.errors && fD.submitted">
+            <div *ngIf="dni.errors.required">Debe introducir el DNI</div>
+            <div *ngIf="dni.errors.validarDni">{{ dni.errors.validarDni.message }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Continuar</button>
+          <button type="button" (click)="resetForm(fD)" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+		</div>
+	</div>
+</div>
+

@@ -30,6 +30,8 @@ import { NombreUsuarioUnicoDirective } from './Validators/nombre-usuario-unico.d
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ModificarEmpleadoFormComponent } from './Empleado/modificar-empleado-form/modificar-empleado-form.component';
 import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.component';
+import { ModificarMascotaFormComponent } from './Mascota/modificar-mascota-form/modificar-mascota-form.component';
+import { NombreTipoUnicoDirective } from './Validators/nombre-tipo-unico.directive';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.com
     EliminarMascotaComponent,
     NombreUsuarioUnicoDirective,
     ModificarEmpleadoFormComponent,
-    TiposMascotaComponent
+    TiposMascotaComponent,
+    ModificarMascotaFormComponent,
+    NombreTipoUnicoDirective
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,3 @@
+export const MESSAGE_TIME_SHOWN = 4000;
+export const MESSAGE_TIME_HIDING = 1500;
+export const MESSAGE_TIME_RESET = 5500;

@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { AgregarMascotaComponent } from './Mascota/agregar-mascota/agregar-mascota.component';
 import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-mascota.component';
 import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-mascota.component';
+import { ModificarMascotaFormComponent } from './Mascota/modificar-mascota-form/modificar-mascota-form.component';
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
 import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.component';
 import { Rol } from './Models/Rol';
@@ -80,6 +81,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {roles: Rol.Admin},
     component: ModificarMascotaComponent
+  },
+  {
+    path: 'ModificarMascotaForm',
+    canActivate: [AuthGuard],
+    data: {roles: Rol.Admin},
+    component: ModificarMascotaFormComponent
   },
   {
     path: 'EliminarMascotas',

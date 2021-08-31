@@ -23,4 +23,20 @@ export class TipoService {
   newTipo(t:Tipo) {
     return this.http.post<Tipo>(this.path + "tipo", t);
   }
+
+  updateTipo(t:Tipo) {
+    return this.http.put<Tipo>(this.path + "tipo/" + t.id_tipo, t);
+  }
+
+  deleteTipo(t:Tipo) {
+    return this.http.delete<Tipo>(this.path + "tipo/" + t.id_tipo);
+  }
+
+  countTipo() {
+    return this.http.get<number>(this.path + "tipos/count");
+  }
+
+  existsTipo(nombre:string) {
+    return this.http.get<boolean>(this.path + "tipo/nombre/" + nombre);
+  }
 }

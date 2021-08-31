@@ -11,8 +11,8 @@ export class AppComponent {
   title = 'appMascotas';
   private roles:string[] = [];
   isLoggedIn = false;
-  mostrarBotonesAdmin = false;
-  mostrarBotonesEmpleado = false;
+  mostrarBotonesAdmin:boolean = false;
+  mostrarBotonesEmpleado:boolean = false;
   username?:string;
 
   constructor(private tokenStorageService:TokenStorageService) { }

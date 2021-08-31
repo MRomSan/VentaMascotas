@@ -1,4 +1,5 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { MESSAGE_TIME_SHOWN, MESSAGE_TIME_RESET, MESSAGE_TIME_HIDING } from 'src/app/global-const';
 import { Empleado } from 'src/app/Models/Empleado';
 import { EmpleadoService } from 'src/app/Services/empleado.service';
 
@@ -26,9 +27,7 @@ export class BajaEmpleadoComponent implements OnInit, AfterViewChecked {
     $(".tabla-seleccionable").on("click", "tbody tr", function() {
       seleccionFilas($(this),true,datosARecoger);
     });
-
-    $("#cant_registros_seleccionados").text(" al empleado seleccionado");
-
+    
     this.cargaDatosEmpleadosEnAlta();
   }
 
@@ -58,12 +57,12 @@ export class BajaEmpleadoComponent implements OnInit, AfterViewChecked {
   lanzarMensaje(message:string, messageClass:string) {
     this.message=message;
     this.messageClass=messageClass;
-    setTimeout(()=>{this.ocultarMensaje()}, 4000);
-    setTimeout(()=>{this.borrarMensaje()}, 5500);
+    setTimeout(()=>{this.ocultarMensaje()}, MESSAGE_TIME_SHOWN);
+    setTimeout(()=>{this.borrarMensaje()}, MESSAGE_TIME_RESET);
   }
 
   ocultarMensaje() {
-    $(".mensaje-resultado").fadeOut(1500);
+    $(".mensaje-resultado").fadeOut(MESSAGE_TIME_HIDING);
   }
 
   borrarMensaje() {

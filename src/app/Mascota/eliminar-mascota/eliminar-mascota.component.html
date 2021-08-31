@@ -1,1 +1,66 @@
-<p>eliminar-mascota works!</p>
+<div *ngIf="!!message" class="mensaje-resultado {{ messageClass }}" role="alert">
+  {{ message }}
+</div>
+
+<div class="px-3 px-md-0 bg-white sticky-top" id="cabecera-info">
+	<div class="d-flex flex-md-row" style="height: 100%;">
+		<div class="col-5 col-md-5 offset-md-1 d-flex justify-content-start align-self-end">
+			<p class="mb-0 pb-1 text-secondary">Seleccione las mascotas a eliminar</p>
+		</div>
+		<div class="col-7 col-md-5 d-flex justify-content-end align-items-center">
+      <div class="form-group mx-2">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="dataFilter">
+      </div>
+			<form name="formElimMascota" (ngSubmit)="eliminarMascotas()" #f="ngForm" class="my-2">
+        <input type="hidden" name="recoge-datos" class="recoge-datos" />
+        <button type="button" class="btn btn-primary desbloquear-btn disabled" id="btn-eliminacion" data-bs-toggle="modal" data-bs-target="#eliminaMascota" aria-disabled="true" tabindex="-1"><i class="fas fa-trash-alt"></i> Eliminar</button>
+      </form>
+		</div>
+	</div>
+</div>
+<div class="d-flex flex-row">
+	<div class="col-12 col-md-10 offset-md-1">
+    <table class="table table-striped table-hover text-center tabla-seleccionable" id="tablaMascotas">
+      <thead class="table table-dark sticky-thead">
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="mascotas != null; else cargando">
+        <tr *ngFor="let mascota of mascotas | filter:dataFilter">
+          <td class="id" style="display: none;">{{ mascota.id_mascota }}</td>
+          <td>{{ mascota.nombre }}</td>
+          <td>{{ mascota.tipo.nombre }}</td>
+          <td>{{ mascota.precio }}</td>
+        </tr>
+      </tbody>
+      <ng-template #cargando>
+        <tbody>
+          <tr>
+            <td colspan="3" class="message">{{ stateMessage }}</td>
+          </tr>
+        </tbody>
+      </ng-template>
+    </table>
+  </div>
+</div>
+
+<div class="modal" id="eliminaMascota" tabindex="-1" aria-labelledby="eliminaMascotaLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="eliminaMascotaLabel">Eliminar Mascota</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>¿Está seguro que desea eliminar<span id="cant_registros_seleccionados">X</span>?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="f.ngSubmit.emit()">Sí</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>

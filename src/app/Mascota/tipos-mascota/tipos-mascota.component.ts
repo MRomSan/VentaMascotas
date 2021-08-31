@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Tipo } from 'src/app/Models/Tipo';
 import { TipoService } from 'src/app/Services/tipo.service';
+import { MESSAGE_TIME_SHOWN, MESSAGE_TIME_RESET, MESSAGE_TIME_HIDING } from 'src/app/global-const';
+
+import * as bootstrap from "bootstrap";
 
 @Component({
   selector: 'app-tipos-mascota',
@@ -11,19 +14,29 @@ import { TipoService } from 'src/app/Services/tipo.service';
 export class TiposMascotaComponent implements OnInit {
   tipos:Tipo[] | null;
   tiposEnUso:Tipo [] | null;
+  tipoSel:Tipo;
+  originalNombreTipo:String = "";
+  valueChanged:boolean = false;
   stateMessage = "Cargando datos...";
   dataFilter:string = "";
   message:string|null="";
   messageClass:string|null="";
   formNuevoT:any;
+  formModifT:any;
 
   constructor(private http:TipoService) {
     this.tipos = null;
     this.tiposEnUso = null;
     this.formNuevoT = new Tipo();
+    this.formModifT = new Tipo();
+    this.tipoSel = new Tipo();
   }
 
   ngOnInit(): void {
+    if(!!localStorage.getItem("message")) {
+      this.lanzarMensaje(localStorage.getItem("message"), localStorage.getItem("messageClass"));
+      localStorage.clear();
+    }
     this.cargaDatosTipos();
   }
 
@@ -32,7 +45,7 @@ export class TiposMascotaComponent implements OnInit {
     .subscribe(
       datosTipos => {
         if(datosTipos.length==0){
-          this.stateMessage="No existen tipos, agregue uno nuevo para comenzar a añadir mascotas";
+          this.stateMessage="No existen tipos de mascotas";
         } else {
           this.tipos=datosTipos;
           this.cargaTiposEnUso();
@@ -47,12 +60,12 @@ export class TiposMascotaComponent implements OnInit {
   lanzarMensaje(message:string|null, messageClass:string|null) {
     this.message=message;
     this.messageClass=messageClass;
-    setTimeout(()=>{this.ocultarMensaje()}, 4000);
-    setTimeout(()=>{this.borrarMensaje()}, 5500);
+    setTimeout(()=>{this.ocultarMensaje()}, MESSAGE_TIME_SHOWN);
+    setTimeout(()=>{this.borrarMensaje()}, MESSAGE_TIME_RESET);
   }
 
   ocultarMensaje() {
-    $(".mensaje-resultado").fadeOut(1500);
+    $(".mensaje-resultado").fadeOut(MESSAGE_TIME_HIDING);
   }
 
   borrarMensaje() {
@@ -71,19 +84,26 @@ export class TiposMascotaComponent implements OnInit {
 
   checkTipoConMascotas(tipo:Tipo):boolean {
     if(this.tiposEnUso!=null){
-      if(this.tiposEnUso.includes(tipo)) {
-        return true;
-      } else return false;
+      for(let i=0; i<this.tiposEnUso.length; i++) {
+        if(this.tiposEnUso[i].nombre==tipo.nombre) return true;
+      }
     }
     return false;
   }
 
-  resetFormNuevoT(f:NgForm) {
+  resetForm(f:NgForm) {
     f.resetForm();
   }
 
+  changeNombreTipo(event:any) {
+    if(event.target.value != this.originalNombreTipo) {
+      this.valueChanged=true;
+    } else {
+      this.valueChanged=false;
+    }
+  }
+
   nuevoTipo(f:NgForm) {
-    var modal = document.getElementById("nuevoTipo");
     this.http.newTipo(this.formNuevoT)
     .subscribe(
       () => {
@@ -91,22 +111,54 @@ export class TiposMascotaComponent implements OnInit {
         this.lanzarMensaje("Tipo creado correctamente","alert alert-success");
       },
       () => {
-        this.lanzarMensaje("Error al crear el nuevo Tipo","alert alert-danger");
+        this.lanzarMensaje("Error al crear el nuevo tipo","alert alert-danger");
       }
     );
-    
-    this.resetFormNuevoT(f);
+    $("#nuevoTipo").modal('hide');
+    this.resetForm(f);
   }
 
-  modificarTipo(tipo:Tipo) {
-
+  modificarTipo(f:NgForm) {
+    this.http.updateTipo(this.formModifT)
+    .subscribe(
+      () => {
+        this.cargaDatosTipos();
+        this.lanzarMensaje("Tipo modificado correctamente","alert alert-success");
+      },
+      () => {
+        this.lanzarMensaje("Error al modificar el tipo","alert alert-danger");
+      }
+    );
+    $("#modificarTipo").modal('hide');
+    this.resetForm(f);
   }
 
-  tipoAEliminar(tipo:Tipo) {
+  tipoSeleccionado(tipo:Tipo) {
+    this.tipoSel = tipo;
+    this.formModifT.id_tipo = tipo.id_tipo;
+    this.formModifT.nombre = tipo.nombre;
+    this.originalNombreTipo = tipo.nombre;
+  }
 
+  getFocusOnNombreN() {
+    document.getElementById("nombreN")?.focus();
   }
 
   eliminarTipo() {
-
+    if(this.tipoSel){
+      this.http.deleteTipo(this.tipoSel)
+      .subscribe(
+        () => {
+          if(!!this.tipos) {
+            this.tipos=this.tipos.filter(t=>t!=this.tipoSel);
+          }
+          this.lanzarMensaje("Tipo eliminado correctamente","alert alert-success");
+        },
+        () => {
+          this.lanzarMensaje("Error al eliminar el tipo","alert alert-danger");
+        }
+      );
+      $("#eliminarTipo").modal('hide');
+    }
   }
 }

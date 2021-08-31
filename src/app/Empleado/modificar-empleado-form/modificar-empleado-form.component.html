@@ -43,7 +43,7 @@
           <label for="username">Usuario</label>
             <div *ngIf="valueChanged; else sinCambios">
               <input type="text" name="username" id="username" placeholder="Nombre de Usuario" class="form-control" [(ngModel)]="formModif.username" #username="ngModel" 
-              pattern="[a-z]+" maxlength="6" required usernameUnico (blur)="changeUsername($event)" />
+              pattern="[a-z]+" maxlength="6" required usernameUnico (change)="changeUsername($event)" />
               <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
                 <div *ngIf="username.errors.required">El Usuario es obligatorio</div>
                 <div *ngIf="username.errors.pattern">El Usuario sólo admite caracteres en minúscula</div>
