@@ -18,7 +18,6 @@ export class ValidarDniDirective implements Validator {
 
     let numero:any;
     let letra, letras;
-    //let expresion_regular = /^[XYZ]?\d{8}[A-Z]$/;
     let expresion_regular = /^\d{8}[a-zA-Z]$/;
 
     dni = dni.toUpperCase();

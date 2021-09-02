@@ -32,6 +32,10 @@ import { ModificarEmpleadoFormComponent } from './Empleado/modificar-empleado-fo
 import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.component';
 import { ModificarMascotaFormComponent } from './Mascota/modificar-mascota-form/modificar-mascota-form.component';
 import { NombreTipoUnicoDirective } from './Validators/nombre-tipo-unico.directive';
+import { registerLocaleData } from '@angular/common';
+import localeES from "@angular/common/locales/es";
+import { NoEspaciosBlancosDirective } from './Validators/no-espacios-blancos.directive';
+registerLocaleData(localeES, "es");
 
 @NgModule({
   declarations: [
@@ -58,7 +62,8 @@ import { NombreTipoUnicoDirective } from './Validators/nombre-tipo-unico.directi
     ModificarEmpleadoFormComponent,
     TiposMascotaComponent,
     ModificarMascotaFormComponent,
-    NombreTipoUnicoDirective
+    NombreTipoUnicoDirective,
+    NoEspaciosBlancosDirective
   ],
   imports: [
     BrowserModule,

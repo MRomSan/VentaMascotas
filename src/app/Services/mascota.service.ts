@@ -36,6 +36,10 @@ export class MascotaService {
     return this.http.put<Mascota>(this.path + "mascota/" + m.id_mascota, m);
   }
 
+  updateMascotas(m:Mascota[], ids:number[]) {
+    return this.http.put<Mascota[]>(this.path + "mascotas/" + ids, m);
+  }
+
   existeMascotaEnTipo(tipo:string, mascota:string) {
     return this.http.get<boolean>(this.path + "mascota/" + tipo + "/" + mascota);
   }

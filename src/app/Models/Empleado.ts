@@ -1,5 +1,3 @@
-import { Rol } from "./Rol";
-
 export class Empleado {
     id_usuario:number|null;
     nombre:String;

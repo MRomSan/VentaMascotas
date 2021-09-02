@@ -2,11 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MESSAGE_TIME_SHOWN, MESSAGE_TIME_RESET, MESSAGE_TIME_HIDING } from 'src/app/global-const';
+import { Cliente } from 'src/app/Models/Cliente';
 import { Mascota } from 'src/app/Models/Mascota';
 import { ClienteService } from 'src/app/Services/cliente.service';
 import { MascotaService } from 'src/app/Services/mascota.service';
 import { TipoService } from 'src/app/Services/tipo.service';
 import { TokenStorageService } from 'src/app/Services/token-storage.service';
+import { VentaService } from 'src/app/Services/venta.service';
+import { Venta } from 'src/app/Models/Venta';
+import { formatDate } from '@angular/common';
+
+import * as bootstrap from "bootstrap";
 
 declare function seleccionFilas(elemento:any,multiSeleccion:boolean,datosARecoger:string[]):any;
 
@@ -26,11 +32,19 @@ export class ListadoMascotaComponent implements OnInit {
   interfazAdmin:boolean=false;
   interfazEmpleado:boolean=false;
   formDNI:any;
+  formNuevoCliente:any;
+  formDetVenta:any;
+  cliente:Cliente;
+  mascotasEnVenta:Mascota[] = [];
+  totalVenta:number = 0;
 
-  constructor(private http:MascotaService, private httpTipo:TipoService, private httpCliente:ClienteService, 
+  constructor(private httpMascota:MascotaService, private httpTipo:TipoService, private httpCliente:ClienteService, private httpVenta:VentaService, 
     private router:Router, private tokenStorageService:TokenStorageService) {
     this.mascotas = null;
-    this.formDNI={dni:''};
+    this.formDNI = {dni:''};
+    this.formNuevoCliente = new Cliente;
+    this.formDetVenta = {id_venta:'', fecha:'', dni:'', nomape:''};
+    this.cliente = new Cliente;
   }
 
   ngOnInit(): void {
@@ -62,7 +76,7 @@ export class ListadoMascotaComponent implements OnInit {
 
   cargaDatosMascotas() {
     if(this.interfazAdmin) {
-      this.http.listMascotas()
+      this.httpMascota.listMascotas()
       .subscribe(
         datosMascotas=>{
           if(datosMascotas.length==0) {
@@ -76,7 +90,7 @@ export class ListadoMascotaComponent implements OnInit {
         }
       );
     } else if(this.interfazEmpleado) {
-      this.http.listMascotasNoVendidas()
+      this.httpMascota.listMascotasNoVendidas()
       .subscribe(
         datosMascotas=>{
           if(datosMascotas.length==0) {
@@ -93,6 +107,14 @@ export class ListadoMascotaComponent implements OnInit {
           this.stateMessage="Error al cargar los datos de mascotas";
         }
       );
+    }
+  }
+
+  addMascotaAVenta(mascota:Mascota) {
+    if(this.mascotasEnVenta.includes(mascota)) {
+      this.mascotasEnVenta.splice(this.mascotasEnVenta.indexOf(mascota), 1);
+    } else {
+      this.mascotasEnVenta.push(mascota);
     }
   }
 
@@ -131,7 +153,7 @@ export class ListadoMascotaComponent implements OnInit {
 
   eliminarMascota() {
     if(this.mascotaAEliminar){
-      this.http.deleteMascotas(this.mascotaAEliminar.id_mascota)
+      this.httpMascota.deleteMascotas(this.mascotaAEliminar.id_mascota)
       .subscribe(
         () => {
           if(this.mascotas) {
@@ -146,6 +168,10 @@ export class ListadoMascotaComponent implements OnInit {
     }
   }
 
+  getFocusonDNI() {
+    document.getElementById("dniB")?.focus();
+  }
+
   resetForm(f:NgForm) {
     f.resetForm();
   }
@@ -155,15 +181,106 @@ export class ListadoMascotaComponent implements OnInit {
     .subscribe(
       datosCliente => {
         if(datosCliente) {
-          console.log("existe");
+          this.cliente = datosCliente;
+          this.detallesVenta();
         } else {
-          console.log("no existe");
+          this.formNuevoCliente.dni=this.formDNI.dni;
+          $("#dniCliente").modal('hide');
+          $("#nuevoCliente").modal('show');
+          document.getElementById("nombre")?.focus();
         }
       }
     );
   }
 
-  venderMascotas() {
+  detallesVenta() {
+    if(this.formNuevoCliente.dni != "" && this.formNuevoCliente.dni != null) {
+      this.cliente = this.formNuevoCliente;
+      $("#nuevoCliente").modal('hide');
+    } else {
+      $("#dniCliente").modal('hide');
+    }
+    this.httpVenta.createIDVenta()
+    .subscribe(
+      nuevaVenta => {
+        this.formDetVenta.id_venta = nuevaVenta.id_venta;
+      }
+    );
+    this.formDetVenta.fecha = formatDate(Date.now(), "dd/MM/yyyy H:mm:ss", "es");
+    this.formDetVenta.dni = this.cliente.dni.toUpperCase();
+    this.formDetVenta.nomape = this.cliente.nombre + " " + this.cliente.apellidos;
 
+    for(let i = 0; i < this.mascotasEnVenta.length; i++) {
+      this.totalVenta += this.mascotasEnVenta[i].precio;
+    }
+    
+    $("#detVenta").modal('show');
+  }
+
+  resetVenta(f:NgForm[]) {
+    for(let i = 0; i < f.length; i++) {
+      f[i].resetForm();
+    }
+    this.totalVenta = 0;
+    this.cliente = new Cliente();
+  }
+
+  venderMascotas() {
+    if(this.formNuevoCliente.dni != "" && this.formNuevoCliente.dni != null) {
+      this.nuevoCliente();
+    } else {
+      this.nuevaVenta();
+    }
+  }
+
+  nuevoCliente() {
+    this.httpCliente.newCliente(this.cliente)
+    .subscribe(
+      () => {
+        this.nuevaVenta();
+      },
+      () => {
+        localStorage.setItem("message", "Error al agregar el nuevo cliente");
+        localStorage.setItem("messageClass", "alert alert-danger");
+        document.location.reload();
+      }
+    );
+  }
+
+  nuevaVenta() {
+    let venta:Venta = new Venta();
+    venta.id_venta = this.formDetVenta.id_venta;
+    venta.cliente = this.cliente;
+    venta.fecha = formatDate(this.formDetVenta.fecha, 'yyyy/MM/dd H:mm:ss', 'es');
+    venta.usuario.id_usuario = this.tokenStorageService.getUser().id;
+    this.httpVenta.createVenta(venta)
+    .subscribe(
+      () => {
+        let ids:number[]= [];
+        for(let i = 0; i < this.mascotasEnVenta.length; i++) {
+          this.mascotasEnVenta[i].venta = new Venta();
+          this.mascotasEnVenta[i].venta.id_venta = this.formDetVenta.id_venta;
+          ids.push(this.mascotasEnVenta[i].id_mascota);
+        }
+        this.httpMascota.updateMascotas(this.mascotasEnVenta, ids)
+        .subscribe(
+          () => {
+            localStorage.setItem("message", "Venta finalizada");
+            localStorage.setItem("messageClass", "alert alert-success");
+            document.location.reload();
+          },
+          () => {
+            localStorage.setItem("message", "Error al actualizar las mascotas");
+            localStorage.setItem("messageClass", "alert alert-danger");
+            document.location.reload();
+          }
+        );
+      },
+      () => {
+        localStorage.setItem("message", "Error al crear la venta");
+        localStorage.setItem("messageClass", "alert alert-danger");
+        document.location.reload();
+      }
+    );
   }
 }

@@ -15,4 +15,8 @@ export class ClienteService {
   getCliente(id:string) {
     return this.http.get<Cliente>(this.path + "cliente/" + id);
   }
+
+  newCliente(c:Cliente) {
+    return this.http.post<Cliente>(this.path + "cliente", c);
+  }
 }

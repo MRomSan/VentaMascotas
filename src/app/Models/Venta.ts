@@ -1,13 +1,16 @@
+import { Cliente } from "./Cliente";
+import { Empleado } from "./Empleado";
+
 export class Venta {
-    id_venta:String|null;
-    id_empleado:number;
-    dni_cliente:String;
+    id_venta:String;
+    usuario:Empleado;
+    cliente:Cliente;
     fecha:String;
 
     constructor() {
-        this.id_venta=null;
-        this.id_empleado=0;
-        this.dni_cliente="";
+        this.id_venta="";
+        this.usuario=new Empleado();
+        this.cliente=new Cliente();
         this.fecha="";
     }
 }

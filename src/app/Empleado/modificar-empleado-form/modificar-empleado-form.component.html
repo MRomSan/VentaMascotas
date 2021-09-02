@@ -12,18 +12,18 @@
         <div class="col-md-4">
           <label for="nombre">Nombre</label>
           <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control" [(ngModel)]="formModif.nombre" #nombre="ngModel" 
-            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" required />
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required />
           <div class="alert alert-danger" role="alert" *ngIf="nombre.errors && f.submitted">
-            <div *ngIf="nombre.errors.required">El Nombre es obligatorio</div>
+            <div *ngIf="nombre.errors.required || nombre.errors.noEspaciosBlancos">El Nombre es obligatorio</div>
             <div *ngIf="nombre.errors.pattern">El Nombre sólo admite letras</div>
           </div>
         </div>
         <div class="col-md-4">
           <label for="apellidos">Apellidos</label>
           <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" class="form-control" [(ngModel)]="formModif.apellidos" #apellidos="ngModel" 
-            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" required />
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required />
           <div class="alert alert-danger" role="alert" *ngIf="apellidos.errors && f.submitted">
-            <div *ngIf="apellidos.errors.required">El Apellido es obligatorio</div>
+            <div *ngIf="apellidos.errors.required || apellidos.errors.noEspaciosBlancos">El Apellido es obligatorio</div>
             <div *ngIf="apellidos.errors.pattern">El Apellido sólo admite letras</div>
           </div>
         </div>
