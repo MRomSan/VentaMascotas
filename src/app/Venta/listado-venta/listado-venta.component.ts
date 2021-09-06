@@ -23,7 +23,7 @@ export class ListadoVentaComponent implements OnInit, AfterViewChecked {
   constructor(private httpVenta:VentaService, private httpMascota:MascotaService, private cd:ChangeDetectorRef) {
     this.ventas = null;
     this.mascotasVendidas = null;
-    this.formDetVenta = {id_venta:'', fecha:'', dni:'', nomape:''};
+    this.formDetVenta = {id_venta:'', fecha:'', dni:'', nomape:'', telefono:'', correo:''};
   }
 
   ngOnInit(): void {
@@ -85,6 +85,8 @@ export class ListadoVentaComponent implements OnInit, AfterViewChecked {
     this.formDetVenta.fecha = formatDate(venta.fecha.toString(), "dd/MM/yyyy HH:mm:ss", "es");
     this.formDetVenta.dni = venta.cliente.dni;
     this.formDetVenta.nomape = venta.cliente.nombre + " " + venta.cliente.apellidos;
+    this.formDetVenta.telefono = venta.cliente.telefono;
+    this.formDetVenta.correo = venta.cliente.correo;
     if(this.mascotasVendidas) {
       this.mascotasVenta = this.mascotasVendidas.filter(m => m.venta.id_venta === venta.id_venta);
       for(let i =0; i < this.mascotasVenta.length; i++){
