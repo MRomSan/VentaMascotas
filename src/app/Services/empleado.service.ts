@@ -13,7 +13,7 @@ export class EmpleadoService {
   }
 
   newEmpleado(e:Empleado) {
-    return this.http.post<Empleado>(this.path + "empleado", e);
+    return this.http.post<Empleado>(this.path + "empleado/" + e.password, e);
   }
 
   existsEmpleado(username:string) {
@@ -28,7 +28,7 @@ export class EmpleadoService {
     return this.http.put<Empleado[]>(this.path + "empleado/baja", ids);
   }
 
-  listarEmpleados() {
+  listEmpleados() {
     return this.http.get<Empleado[]>(this.path + "empleados");
   }
 

@@ -206,7 +206,7 @@ export class ListadoMascotaComponent implements OnInit {
         this.formDetVenta.id_venta = nuevaVenta.id_venta;
       }
     );
-    this.formDetVenta.fecha = formatDate(Date.now(), "dd/MM/yyyy H:mm:ss", "es");
+    this.formDetVenta.fecha = formatDate(Date.now(), 'dd/MM/yyyy HH:mm:ss', 'es-ES');
     this.formDetVenta.dni = this.cliente.dni.toUpperCase();
     this.formDetVenta.nomape = this.cliente.nombre + " " + this.cliente.apellidos;
 
@@ -249,20 +249,23 @@ export class ListadoMascotaComponent implements OnInit {
 
   nuevaVenta() {
     let venta:Venta = new Venta();
+    let mascotasVendidas:Mascota[] = [];
     venta.id_venta = this.formDetVenta.id_venta;
     venta.cliente = this.cliente;
-    venta.fecha = formatDate(this.formDetVenta.fecha, 'yyyy/MM/dd H:mm:ss', 'es');
+    venta.fecha = formatDate(formatDate(this.formDetVenta.fecha, 'dd/MM/yyyy HH:mm:ss', 'es-ES'), 'yyyy-MM-dd HH:mm:ss', 'es-ES');
     venta.usuario.id_usuario = this.tokenStorageService.getUser().id;
     this.httpVenta.createVenta(venta)
     .subscribe(
       () => {
         let ids:number[]= [];
         for(let i = 0; i < this.mascotasEnVenta.length; i++) {
-          this.mascotasEnVenta[i].venta = new Venta();
-          this.mascotasEnVenta[i].venta.id_venta = this.formDetVenta.id_venta;
+          mascotasVendidas[i] = new Mascota();
+          mascotasVendidas[i].venta = new Venta();
+          mascotasVendidas[i].venta.id_venta = this.formDetVenta.id_venta;
+          mascotasVendidas[i].id_mascota = this.mascotasEnVenta[i].id_mascota;
           ids.push(this.mascotasEnVenta[i].id_mascota);
         }
-        this.httpMascota.updateMascotas(this.mascotasEnVenta, ids)
+        this.httpMascota.updateMascotas(mascotasVendidas, ids)
         .subscribe(
           () => {
             localStorage.setItem("message", "Venta finalizada");

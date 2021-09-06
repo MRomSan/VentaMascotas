@@ -6,7 +6,6 @@ export class Cliente {
     localidad:String;
     correo:String;
     telefono:String;
-    publicidad:boolean;
 
     constructor() {
         this.dni="";
@@ -16,6 +15,5 @@ export class Cliente {
         this.localidad="";
         this.correo="";
         this.telefono="";
-        this.publicidad=true;
     }
 }

@@ -20,7 +20,7 @@
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" routerLink="ListadoEmpleados">Listado</a></li>
             <li><a class="dropdown-item" routerLink="AltaEmpleado">Alta</a></li>
-            <li><a class="dropdown-item" routerLink="ModificarEmpleado">Modificación</a></li>
+            <li><a class="dropdown-item" routerLink="ModificarEmpleado">Modificar</a></li>
             <li><a class="dropdown-item" routerLink="BajaEmpleados">Baja</a></li>
           </ul>
         </li>
@@ -31,7 +31,7 @@
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" routerLink="ListadoMascotas">Listado</a></li>
             <li><a class="dropdown-item" routerLink="AltaMascota">Alta</a></li>
-            <li><a class="dropdown-item" routerLink="ModificarMascota">Modificación</a></li>
+            <li><a class="dropdown-item" routerLink="ModificarMascota">Modificar</a></li>
             <li><a class="dropdown-item" routerLink="EliminarMascotas">Eliminar</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" routerLink="TiposMascota">Tipos</a></li>
@@ -40,14 +40,8 @@
         <li class="nav-item" *ngIf="mostrarBotonesEmpleado">
           <a class="nav-link" routerLink="ListadoMascotas">Mascotas</a>
         </li>
-        <li class="nav-item dropdown" *ngIf="mostrarBotonesAdmin">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Clientes
-          </a>
-          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" routerLink="ListadoClientes">Listado</a></li>
-            <li><a class="dropdown-item" routerLink="ModificarCliente">Modificación</a></li>
-          </ul>
+        <li class="nav-item" *ngIf="mostrarBotonesAdmin">
+          <a class="nav-link" routerLink="ListadoClientes">Clientes</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn">
           <a class="nav-link" routerLink="ListadoVentas">Histórico de Ventas</a>

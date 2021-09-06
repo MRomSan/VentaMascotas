@@ -28,7 +28,7 @@ export class ModificarEmpleadoComponent implements OnInit {
       seleccionFilas($(this),false,datosARecoger);
     });
 
-    this.http.listarEmpleados()
+    this.http.listEmpleados()
     .subscribe(
       datosEmpleados=>{
         this.empleados=datosEmpleados;

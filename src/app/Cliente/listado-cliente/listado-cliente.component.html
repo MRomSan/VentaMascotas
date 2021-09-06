@@ -1,1 +1,50 @@
-<p>listado-cliente works!</p>
+<div *ngIf="!!message" class="mensaje-resultado {{ messageClass }}" role="alert">
+  {{ message }}
+</div>
+
+<div class="px-3 px-md-0 bg-white sticky-top" id="cabecera-info">
+	<div class="d-flex flex-md-row" style="height: 100%;">
+		<div class="col-12 col-md-11 d-flex justify-content-end align-items-center">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="dataFilter">
+      </div>
+		</div>
+	</div>
+</div>
+<div class="d-flex flex-row">
+	<div class="col-12 col-md-10 offset-md-1">
+    <table class="table table-striped table-hover text-center tabla-seleccionable" id="tablaClientes">
+      <thead class="table-dark sticky-thead">
+        <tr>
+          <th>DNI</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Dirección</th>
+          <th>Localidad</th>
+          <th>e-mail</th>
+          <th>Teléfono</th>
+          <th>Modificar</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="clientes != null; else cargando">
+        <tr *ngFor="let cliente of clientes | filter:dataFilter">
+          <td>{{ cliente.dni }}</td>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellidos }}</td>
+          <td>{{ cliente.direccion }}</td>
+          <td>{{ cliente.localidad }}</td>
+          <td>{{ cliente.correo }}</td>
+          <td>{{ cliente.telefono }}</td>
+          <td><a [routerLink]="" (click)="modificarCliente(cliente)"><i class="fas fa-edit" alt="Modificar" title="Modificar"></i></a></td>
+        </tr>
+      </tbody>
+      <ng-template #cargando>
+        <tbody>
+          <tr>
+            <td colspan="8" class="message">{{ stateMessage }}</td>
+          </tr>
+        </tbody>
+      </ng-template>
+    </table>
+  </div>
+</div>

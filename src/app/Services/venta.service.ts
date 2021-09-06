@@ -20,4 +20,8 @@ export class VentaService {
     return this.http.post<Venta>(this.path + "venta", v);
   }
 
+  listVentas() {
+    return this.http.get<Venta[]>(this.path + "ventas");
+  }
+
 }

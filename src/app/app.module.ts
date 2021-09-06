@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,12 +9,8 @@ import { ValidarDniDirective } from './Validators/validar-dni.directive';
 import { ListadoEmpleadoComponent } from './Empleado/listado-empleado/listado-empleado.component';
 import { AgregarEmpleadoComponent } from './Empleado/agregar-empleado/agregar-empleado.component';
 import { ModificarEmpleadoComponent } from './Empleado/modificar-empleado/modificar-empleado.component';
-import { AgregarClienteComponent } from './Cliente/agregar-cliente/agregar-cliente.component';
 import { ListadoClienteComponent } from './Cliente/listado-cliente/listado-cliente.component';
-import { ModificarClienteComponent } from './Cliente/modificar-cliente/modificar-cliente.component';
-import { AgregarTipoComponent } from './Tipo/agregar-tipo/agregar-tipo.component';
 import { ListadoTipoComponent } from './Tipo/listado-tipo/listado-tipo.component';
-import { ModificarTipoComponent } from './Tipo/modificar-tipo/modificar-tipo.component';
 import { AgregarMascotaComponent } from './Mascota/agregar-mascota/agregar-mascota.component';
 import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-mascota.component';
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
@@ -29,12 +25,12 @@ import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.co
 import { NombreUsuarioUnicoDirective } from './Validators/nombre-usuario-unico.directive';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ModificarEmpleadoFormComponent } from './Empleado/modificar-empleado-form/modificar-empleado-form.component';
-import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.component';
 import { ModificarMascotaFormComponent } from './Mascota/modificar-mascota-form/modificar-mascota-form.component';
 import { NombreTipoUnicoDirective } from './Validators/nombre-tipo-unico.directive';
+import { NoEspaciosBlancosDirective } from './Validators/no-espacios-blancos.directive';
+import { ModificarClienteFormComponent } from './Cliente/modificar-cliente-form/modificar-cliente-form.component';
 import { registerLocaleData } from '@angular/common';
 import localeES from "@angular/common/locales/es";
-import { NoEspaciosBlancosDirective } from './Validators/no-espacios-blancos.directive';
 registerLocaleData(localeES, "es");
 
 @NgModule({
@@ -44,12 +40,8 @@ registerLocaleData(localeES, "es");
     ListadoEmpleadoComponent,
     AgregarEmpleadoComponent,
     ModificarEmpleadoComponent,
-    AgregarClienteComponent,
     ListadoClienteComponent,
-    ModificarClienteComponent,
-    AgregarTipoComponent,
     ListadoTipoComponent,
-    ModificarTipoComponent,
     AgregarMascotaComponent,
     ListadoMascotaComponent,
     ModificarMascotaComponent,
@@ -60,10 +52,10 @@ registerLocaleData(localeES, "es");
     EliminarMascotaComponent,
     NombreUsuarioUnicoDirective,
     ModificarEmpleadoFormComponent,
-    TiposMascotaComponent,
     ModificarMascotaFormComponent,
     NombreTipoUnicoDirective,
-    NoEspaciosBlancosDirective
+    NoEspaciosBlancosDirective,
+    ModificarClienteFormComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +64,7 @@ registerLocaleData(localeES, "es");
     HttpClientModule,
     Ng2SearchPipeModule
   ],
-  providers: [authInterceptorProviders, AuthGuard],
+  providers: [authInterceptorProviders, AuthGuard, {provide:LOCALE_ID, useValue:'es'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

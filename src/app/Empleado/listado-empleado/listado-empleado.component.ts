@@ -31,7 +31,7 @@ export class ListadoEmpleadoComponent implements OnInit {
   }
 
   cargaDatosEmpleados() {
-    this.http.listarEmpleados()
+    this.http.listEmpleados()
     .subscribe(
       datosEmpleados=>{
         this.empleados=datosEmpleados;

@@ -45,9 +45,9 @@ export class EliminarMascotaComponent implements OnInit, AfterViewChecked {
     $("#tablaMascotas tbody tr").on("classChange", function(){
       var cantidadSeleccionados = $("#tablaMascotas tbody tr.selected").length;
       if(cantidadSeleccionados == 1) {
-        $("#cant_registros_seleccionados").text(" a la mascota seleccionada");
+        $("#cant_registros_seleccionados").text(" la mascota seleccionada");
       } else {
-        $("#cant_registros_seleccionados").text(" a las "+ cantidadSeleccionados + " mascotas seleccionadas");
+        $("#cant_registros_seleccionados").text(" las "+ cantidadSeleccionados + " mascotas seleccionadas");
       }
     });
   }

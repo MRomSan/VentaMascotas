@@ -1,0 +1,80 @@
+<div *ngIf="!!message" class="mensaje-resultado {{ messageClass }}" role="alert">
+  {{ message }}
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h2>Modificación de Cliente</h2>
+  </div>
+  <div class="card-body">
+    <form name="formModif" (submit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="row form-group">
+        <div class="col-md-2">
+          <label for="dni">DNI</label>
+          <input type="text" name="dni" id="dni" placeholder="DNI" class="form-control" [(ngModel)]="formModif.dni" #dni="ngModel" disabled tabindex="-1" />
+        </div>
+        <div class="col-md-5">
+          <label for="nombre">Nombre</label>
+          <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control" [(ngModel)]="formModif.nombre" #nombre="ngModel" 
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required />
+          <div class="alert alert-danger" role="alert" *ngIf="nombre.errors && f.submitted">
+            <div *ngIf="nombre.errors.required || nombre.errors.noEspaciosBlancos">El Nombre es obligatorio</div>
+            <div *ngIf="nombre.errors.pattern">El Nombre sólo admite letras</div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <label for="apellidos">Apellidos</label>
+          <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" class="form-control" [(ngModel)]="formModif.apellidos" #apellidos="ngModel" 
+            pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required />
+          <div class="alert alert-danger" role="alert" *ngIf="apellidos.errors && f.submitted">
+            <div *ngIf="apellidos.errors.required || apellidos.errors.noEspaciosBlancos">El Apellido es obligatorio</div>
+            <div *ngIf="apellidos.errors.pattern">El Apellido sólo admite letras</div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group pt-2">
+        <div class="col-md-6">
+          <label for="direccion">Dirección</label>
+          <input type="text" name="direccion" id="direccion" placeholder="Dirección" class="form-control" [(ngModel)]="formModif.direccion" #direccion="ngModel" 
+            maxlength="50" noEspaciosBlancos required />
+          <div class="alert alert-danger" role="alert" *ngIf="direccion.errors && f.submitted">
+            <div *ngIf="direccion.errors.required || direccion.errors.noEspaciosBlancos">La dirección es obligatoria</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="localidad">Localidad</label>
+          <input type="text" name="localidad" id="localidad" placeholder="Localidad" class="form-control" [(ngModel)]="formModif.localidad" #localidad="ngModel" 
+            maxlength="50" noEspaciosBlancos required />
+          <div class="alert alert-danger" role="alert" *ngIf="localidad.errors && f.submitted">
+            <div *ngIf="localidad.errors.required || localidad.errors.noEspaciosBlancos">La localidad es obligatoria</div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group pt-2">
+        <div class="col-md-6">
+          <label for="email">E-mail</label>
+          <input type="text" name="email" id="email" placeholder="Dirección e-mail" class="form-control" [(ngModel)]="formModif.correo" #correo="ngModel" 
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="50" required />
+          <div class="alert alert-danger" role="alert" *ngIf="correo.errors && f.submitted">
+            <div *ngIf="correo.errors.required">El e-mail es obligatorio</div>
+            <div *ngIf="correo.errors.pattern">Introduzca un e-mail válido</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="telefono">Teléfono</label>
+          <input type="text" name="telefono" id="telefono" placeholder="Teléfono" class="form-control" [(ngModel)]="formModif.telefono" #telefono="ngModel" 
+            pattern="[0-9]+" minlength="9" maxlength="9" required />
+          <div class="alert alert-danger" role="alert" *ngIf="telefono.errors && f.submitted">
+            <div *ngIf="telefono.errors.required">El Teléfono es obligatorio</div>
+            <div *ngIf="telefono.errors.minlength">El Teléfono debe tener 9 dígitos</div>
+            <div *ngIf="telefono.errors.pattern">El telefono sólo admite números</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group pt-3">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary mx-2" (click)="back()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

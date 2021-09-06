@@ -1,1 +1,129 @@
-<p>listado-tipo works!</p>
+<div *ngIf="!!message" class="mensaje-resultado {{ messageClass }}" role="alert">
+    {{ message }}
+  </div>
+  
+  <div class="px-3 px-md-0 bg-white sticky-top" id="cabecera-info">
+      <div class="d-flex flex-md-row" style="height: 100%;">
+          <div class="col-12 col-md-11 d-flex justify-content-end align-items-center">
+        <div class="form-group mx-2">
+          <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="dataFilter">
+        </div>
+              <button type="button" class="btn btn-primary" id="btn-nuevo" (click)="getFocusOnNombreN()" data-bs-toggle="modal" data-bs-target="#nuevoTipo"><i class="fas fa-plus-circle"></i> Nuevo</button>
+          </div>
+      </div>
+  </div>
+  <div class="d-flex flex-row">
+      <div class="col-12 col-md-10 offset-md-1">
+      <table class="table table-striped table-hover text-center tabla-seleccionable" id="tablaTipos">
+        <thead class="table-dark sticky-thead">
+          <tr>
+            <th>Tipo</th>
+            <th>Modificar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="tipos != null; else cargando">
+          <tr *ngFor="let tipo of tipos | filter:dataFilter">
+            <td class="id" style="display: none;">{{ tipo.id_tipo }}</td>
+            <td>{{ tipo.nombre }}</td>
+            <td><a [routerLink]="" (click)="tipoSeleccionado(tipo)" data-bs-toggle="modal" data-bs-target="#modificarTipo"><i class="fas fa-edit"></i></a></td>
+            <td *ngIf="!checkTipoConMascotas(tipo); else tieneMascotas">
+              <a [routerLink]="" (click)="tipoSeleccionado(tipo)" data-bs-toggle="modal" data-bs-target="#eliminarTipo"><i class="fas fa-trash-alt"></i></a>
+            </td>
+            <ng-template #tieneMascotas>
+              <td></td>
+            </ng-template>
+          </tr>
+        </tbody>
+        <ng-template #cargando>
+          <tbody>
+            <tr>
+              <td colspan="3" class="message">{{ stateMessage }}</td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div>
+  </div>
+  
+  <div class="modal" id="nuevoTipo" tabindex="-1" aria-labelledby="nuevoTipoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="nuevoTipoLabel">Nuevo Tipo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+        <form name="formNuevoT" (submit)="fNT.form.valid && nuevoTipo(fNT)" #fNT="ngForm" novalidate>
+                <div class="modal-body">
+            <label for="nombre">Tipo</label>
+            <input type="text" name="nombreN" id="nombreN" placeholder="Nombre" class="form-control" [(ngModel)]="formNuevoT.nombre" #nombre="ngModel" 
+              pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required nombreTipoUnico />
+            <div class="alert alert-danger" role="alert" *ngIf="nombre.errors && fNT.submitted">
+              <div *ngIf="nombre.errors.required || nombre.errors.noEspaciosBlancos">El Tipo es obligatorio</div>
+              <div *ngIf="nombre.errors.pattern">El Tipo sólo admite letras</div>
+              <div *ngIf="nombre.errors.nombreTipoUnico">El Tipo ya existe</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" (click)="resetForm(fNT)" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+          </div>
+      </div>
+  </div>
+  
+  <div class="modal" id="modificarTipo" tabindex="-1" aria-labelledby="modificarTipoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="modificarTipoLabel">Modificar Tipo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+        <form name="formModifT" (submit)="fMT.form.valid && modificarTipo(fMT)" #fMT="ngForm" novalidate>
+                <div class="modal-body">
+            <label for="nombre">Tipo</label>
+            <div *ngIf="valueChanged; else sinCambios">
+              <input type="text" name="nombreM" id="nombreM" placeholder="Nombre" class="form-control" [(ngModel)]="formModifT.nombre" #nombre="ngModel" 
+                pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" required nombreTipoUnico (change)="changeNombreTipo($event)" />
+              <div class="alert alert-danger" role="alert" *ngIf="nombre.errors && fMT.submitted">
+                <div *ngIf="nombre.errors.required">El Tipo es obligatorio</div>
+                <div *ngIf="nombre.errors.pattern">El Tipo sólo admite letras</div>
+                <div *ngIf="nombre.errors.nombreTipoUnico">El Tipo ya existe</div>
+              </div>
+            </div>
+            <ng-template #sinCambios>
+              <input type="text" name="nombreM" id="nombreM" placeholder="Nombre" class="form-control" [(ngModel)]="formModifT.nombre" #nombre="ngModel" 
+                pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" required (change)="changeNombreTipo($event)" />
+              <div class="alert alert-danger" role="alert" *ngIf="nombre.errors && fMT.submitted">
+                <div *ngIf="nombre.errors.required">El Tipo es obligatorio</div>
+                <div *ngIf="nombre.errors.pattern">El Tipo sólo admite letras</div>
+              </div>
+            </ng-template>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" (click)="resetForm(fMT)" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+          </div>
+      </div>
+  </div>
+  
+  <div class="modal" id="eliminarTipo" tabindex="-1" aria-labelledby="eliminarTipoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="eliminarTipoLabel">Eliminar Tipo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <p>¿Está seguro que desea eliminar el tipo seleccionado?</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="eliminarTipo()">Sí</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+              </div>
+          </div>
+      </div>
+  </div>

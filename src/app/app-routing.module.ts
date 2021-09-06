@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListadoClienteComponent } from './Cliente/listado-cliente/listado-cliente.component';
-import { ModificarClienteComponent } from './Cliente/modificar-cliente/modificar-cliente.component';
+import { ModificarClienteFormComponent } from './Cliente/modificar-cliente-form/modificar-cliente-form.component';
 import { AgregarEmpleadoComponent } from './Empleado/agregar-empleado/agregar-empleado.component';
 import { BajaEmpleadoComponent } from './Empleado/baja-empleado/baja-empleado.component';
 import { ListadoEmpleadoComponent } from './Empleado/listado-empleado/listado-empleado.component';
@@ -14,9 +14,9 @@ import { EliminarMascotaComponent } from './Mascota/eliminar-mascota/eliminar-ma
 import { ListadoMascotaComponent } from './Mascota/listado-mascota/listado-mascota.component';
 import { ModificarMascotaFormComponent } from './Mascota/modificar-mascota-form/modificar-mascota-form.component';
 import { ModificarMascotaComponent } from './Mascota/modificar-mascota/modificar-mascota.component';
-import { TiposMascotaComponent } from './Mascota/tipos-mascota/tipos-mascota.component';
 import { Rol } from './Models/Rol';
 import { AuthGuard } from './Services/auth.guard';
+import { ListadoTipoComponent } from './Tipo/listado-tipo/listado-tipo.component';
 import { ListadoVentaComponent } from './Venta/listado-venta/listado-venta.component';
 
 const routes: Routes = [
@@ -62,7 +62,7 @@ const routes: Routes = [
     path: 'TiposMascota',
     canActivate: [AuthGuard],
     data: {roles: Rol.Admin},
-    component: TiposMascotaComponent
+    component: ListadoTipoComponent
   },
   {
     path: 'ListadoMascotas',
@@ -101,10 +101,10 @@ const routes: Routes = [
     component: ListadoClienteComponent
   },
   {
-    path: 'ModificarCliente',
+    path: 'ModificarClienteForm',
     canActivate: [AuthGuard],
     data: {roles: Rol.Admin},
-    component: ModificarClienteComponent
+    component: ModificarClienteFormComponent
   },
   {
     path: 'ListadoVentas',

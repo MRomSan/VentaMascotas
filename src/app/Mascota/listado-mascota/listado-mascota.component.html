@@ -204,13 +204,13 @@
               <tr *ngFor="let mascota of mascotasEnVenta">
                 <td>{{ mascota.nombre }}</td>
                 <td>{{ mascota.tipo.nombre }}</td>
-                <td>{{ mascota.precio | number:'1.2-2':'es' }}</td>
+                <td>{{ mascota.precio | number:'1.2-2' }}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr class="table-success">
                 <th colspan="2">Total</th>
-                <th>{{ totalVenta | number:'1.2-2':'es' }}</th>
+                <th>{{ totalVenta | number:'1.2-2' }}</th>
               </tr>
             </tfoot>
           </table>

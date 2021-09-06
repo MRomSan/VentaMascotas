@@ -19,4 +19,12 @@ export class ClienteService {
   newCliente(c:Cliente) {
     return this.http.post<Cliente>(this.path + "cliente", c);
   }
+
+  listClientes() {
+    return this.http.get<Cliente[]>(this.path + "clientes");
+  }
+
+  updateCliente(c:Cliente) {
+    return this.http.put<Cliente>(this.path + "cliente/" + c.dni, c);
+  }
 }

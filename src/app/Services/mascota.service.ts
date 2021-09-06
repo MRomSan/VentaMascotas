@@ -24,6 +24,10 @@ export class MascotaService {
     return this.http.get<Mascota[]>(this.path + "mascotas/novendidas");
   }
 
+  listMascotasVendidas() {
+    return this.http.get<Mascota[]>(this.path + "mascotas/vendidas");
+  }
+
   deleteMascotas(id:any) {
     return this.http.delete<Mascota[]>(this.path + "mascota/" + id);
   }
