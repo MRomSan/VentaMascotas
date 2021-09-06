@@ -14,18 +14,6 @@
         <div class="alert alert-danger" role="alert" *ngIf="username.errors && f.submitted">
           <div *ngIf="username.errors.required || username.errors.noEspaciosBlancos">El Usuario es obligatorio</div>
         </div>
-        <!--
-        <input type="text" class="form-control" name="username" id="usuario" [(ngModel)]="form.username" required maxlength="6" #username="ngModel" />
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="username.errors && f.submitted"
-        >
-          <div *ngIf="username.errors.required">El Usuario es obligatorio</div>
-          <div *ngIf="username.errors.maxlength">
-            El Usuario debe tener un máximo de 6 caracteres
-          </div>
-        </div>-->
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
@@ -33,21 +21,6 @@
         <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors.required || password.errors.noEspaciosBlancos">La Contraseña es obligatoria</div>
         </div>
-        <!--
-        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6" maxlength="12" #password="ngModel" />
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="password.errors && f.submitted"
-        >
-          <div *ngIf="password.errors.required">La Contraseña es obligatoria</div>
-          <div *ngIf="password.errors.minlength">
-            La Contraseña debe tener un mínimo de 6 caracteres
-          </div>
-          <div *ngIf="password.errors.maxlength">
-            La Contraseña debe tener un máximo de 12 caracteres
-          </div>
-        </div>-->
       </div>
       <div class="form-group pt-2">
         <button class="btn btn-primary btn-block">
