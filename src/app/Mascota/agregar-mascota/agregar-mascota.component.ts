@@ -55,6 +55,7 @@ export class AgregarMascotaComponent implements OnInit {
   }
 
   onSubmit(f:NgForm): void {
+    this.formNuevaM.nombre = this.formNuevaM.nombre.trim();
     this.http.newMascota(this.formNuevaM)
     .subscribe(
       () => {

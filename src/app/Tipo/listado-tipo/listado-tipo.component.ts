@@ -104,6 +104,7 @@ export class ListadoTipoComponent implements OnInit {
   }
 
   nuevoTipo(f:NgForm) {
+    this.formNuevoT.nombre = this.formNuevoT.nombre.trim();
     this.http.newTipo(this.formNuevoT)
     .subscribe(
       () => {

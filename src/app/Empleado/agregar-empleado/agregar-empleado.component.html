@@ -23,8 +23,8 @@
           <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" class="form-control" [(ngModel)]="formAlta.apellidos" #apellidos="ngModel" 
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required />
           <div class="alert alert-danger" role="alert" *ngIf="apellidos.errors && f.submitted">
-            <div *ngIf="apellidos.errors.required || apellidos.errors.noEspaciosBlancos">El Apellido es obligatorio</div>
-            <div *ngIf="apellidos.errors.pattern">El Apellido sólo admite letras</div>
+            <div *ngIf="apellidos.errors.required || apellidos.errors.noEspaciosBlancos">Los Apellidos son obligatorios</div>
+            <div *ngIf="apellidos.errors.pattern">Los Apellidos sólo admiten letras</div>
           </div>
         </div>
         <div class="col-md-4">
@@ -34,7 +34,7 @@
           <div class="alert alert-danger" role="alert" *ngIf="telefono.errors && f.submitted">
             <div *ngIf="telefono.errors.required">El Teléfono es obligatorio</div>
             <div *ngIf="telefono.errors.minlength">El Teléfono debe tener 9 dígitos</div>
-            <div *ngIf="telefono.errors.pattern">El telefono sólo admite números</div>
+            <div *ngIf="telefono.errors.pattern">El Teléfono sólo admite números</div>
           </div>
         </div>
       </div>

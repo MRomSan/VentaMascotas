@@ -39,16 +39,16 @@ export class ListadoVentaComponent implements OnInit, AfterViewChecked {
     this.httpVenta.listVentas()
     .subscribe(
       datosVentas=>{
-        this.ventas=datosVentas;
-        if(this.ventas.length==0) {
-          this.stateMessage="No existen ventas";
-        } else {
+        if(datosVentas.length!=0) {
+          this.ventas = datosVentas;
           this.httpMascota.listMascotasVendidas()
           .subscribe(
             datosMascotas => {
               this.mascotasVendidas=datosMascotas;
             }
           );
+        } else {
+          this.stateMessage="No existen ventas";
         }
       },
       ()=>{

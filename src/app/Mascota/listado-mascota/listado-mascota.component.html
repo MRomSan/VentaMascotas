@@ -116,27 +116,27 @@
           <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control" [(ngModel)]="formNuevoCliente.nombre" #nombre="ngModel" 
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required />
           <div class="alert alert-danger" role="alert" *ngIf="nombre.errors && fNC.submitted">
-            <div *ngIf="nombre.errors.required || nombre.errors.noEspaciosBlancos">El nombre es obligatorio</div>
-            <div *ngIf="nombre.errors.pattern">El nombre sólo admite letras</div>
+            <div *ngIf="nombre.errors.required || nombre.errors.noEspaciosBlancos">El Nombre es obligatorio</div>
+            <div *ngIf="nombre.errors.pattern">El Nombre sólo admite letras</div>
           </div>
           <label for="apellidos">Apellidos</label>
           <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" class="form-control" [(ngModel)]="formNuevoCliente.apellidos" #apellidos="ngModel" 
             pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" maxlength="30" noEspaciosBlancos required />
           <div class="alert alert-danger" role="alert" *ngIf="apellidos.errors && fNC.submitted">
-            <div *ngIf="apellidos.errors.required || apellidos.errors.noEspaciosBlancos">El apellido es obligatorio</div>
-            <div *ngIf="apellidos.errors.pattern">El apellido sólo admite letras</div>
+            <div *ngIf="apellidos.errors.required || apellidos.errors.noEspaciosBlancos">Los Apellidos son obligatorios</div>
+            <div *ngIf="apellidos.errors.pattern">Los Apellidos sólo admiten letras</div>
           </div>
           <label for="direccion">Dirección</label>
           <input type="text" name="direccion" id="direccion" placeholder="Dirección" class="form-control" [(ngModel)]="formNuevoCliente.direccion" #direccion="ngModel" 
             maxlength="50" noEspaciosBlancos required />
           <div class="alert alert-danger" role="alert" *ngIf="direccion.errors && fNC.submitted">
-            <div *ngIf="direccion.errors.required || direccion.errors.noEspaciosBlancos">La dirección es obligatoria</div>
+            <div *ngIf="direccion.errors.required || direccion.errors.noEspaciosBlancos">La Dirección es obligatoria</div>
           </div>
           <label for="localidad">Localidad</label>
           <input type="text" name="localidad" id="localidad" placeholder="Localidad" class="form-control" [(ngModel)]="formNuevoCliente.localidad" #localidad="ngModel" 
             maxlength="50" noEspaciosBlancos required />
           <div class="alert alert-danger" role="alert" *ngIf="localidad.errors && fNC.submitted">
-            <div *ngIf="localidad.errors.required || localidad.errors.noEspaciosBlancos">La localidad es obligatoria</div>
+            <div *ngIf="localidad.errors.required || localidad.errors.noEspaciosBlancos">La Localidad es obligatoria</div>
           </div>
           <label for="email">E-mail</label>
           <input type="text" name="email" id="email" placeholder="Dirección e-mail" class="form-control" [(ngModel)]="formNuevoCliente.correo" #correo="ngModel" 
@@ -151,7 +151,7 @@
           <div class="alert alert-danger" role="alert" *ngIf="telefono.errors && fNC.submitted">
             <div *ngIf="telefono.errors.required">El Teléfono es obligatorio</div>
             <div *ngIf="telefono.errors.minlength">El Teléfono debe tener 9 dígitos</div>
-            <div *ngIf="telefono.errors.pattern">El telefono sólo admite números</div>
+            <div *ngIf="telefono.errors.pattern">El Teléfono sólo admite números</div>
           </div>
         </div>
         <div class="modal-footer">

@@ -63,6 +63,10 @@ export class ModificarClienteFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formModif.nombre = this.formModif.nombre.trim();
+    this.formModif.apellidos = this.formModif.apellidos.trim();
+    this.formModif.direccion = this.formModif.direccion.trim();
+    this.formModif.localidad = this.formModif.localidad.trim();
     this.http.updateCliente(this.formModif)
     .subscribe(
       () => {

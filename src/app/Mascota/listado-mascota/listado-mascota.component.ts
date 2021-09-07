@@ -234,6 +234,10 @@ export class ListadoMascotaComponent implements OnInit {
   }
 
   nuevoCliente() {
+    this.cliente.nombre = this.cliente.nombre.trim();
+    this.cliente.apellidos = this.cliente.apellidos.trim();
+    this.cliente.direccion = this.cliente.direccion.trim();
+    this.cliente.localidad = this.cliente.localidad.trim();
     this.httpCliente.newCliente(this.cliente)
     .subscribe(
       () => {

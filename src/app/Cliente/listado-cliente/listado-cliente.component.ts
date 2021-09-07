@@ -32,10 +32,14 @@ export class ListadoClienteComponent implements OnInit {
     this.http.listClientes()
     .subscribe(
       datosClientes=>{
-        this.clientes=datosClientes;
+        if(datosClientes.length!=0) {
+          this.clientes=datosClientes;
+        } else {
+          this.stateMessage="No existen clientes";
+        }
       },
       ()=>{
-        this.stateMessage="Error al cargar los datos de empleados";
+        this.stateMessage="Error al cargar los datos de clientes";
       }
     );
   }

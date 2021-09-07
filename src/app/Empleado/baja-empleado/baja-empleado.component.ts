@@ -46,7 +46,11 @@ export class BajaEmpleadoComponent implements OnInit, AfterViewChecked {
     this.http.listEmpleadosDeAlta()
     .subscribe(
       datosEmpleados => {
-        this.empleados = datosEmpleados;
+        if(datosEmpleados.length!=0){
+          this.empleados = datosEmpleados;
+        } else {
+          this.stateMessage = "No existen empleados";
+        }
       },
       () => {
         this.stateMessage = "Error al cargar los datos de empleados";

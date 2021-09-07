@@ -40,6 +40,8 @@ export class AgregarEmpleadoComponent implements OnInit {
   }
 
   onSubmit(f:NgForm): void {
+    this.formAlta.nombre = this.formAlta.nombre.trim();
+    this.formAlta.apellidos = this.formAlta.apellidos.trim();
     this.http.newEmpleado(this.formAlta)
     .subscribe(
       () => {

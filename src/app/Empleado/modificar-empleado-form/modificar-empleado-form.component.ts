@@ -89,6 +89,8 @@ export class ModificarEmpleadoFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formModif.nombre = this.formModif.nombre.trim();
+    this.formModif.apellidos = this.formModif.apellidos.trim();
     this.http.updateEmpleado(this.formModif)
     .subscribe(
       () => {

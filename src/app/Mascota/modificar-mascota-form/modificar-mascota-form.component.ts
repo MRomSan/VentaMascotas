@@ -73,6 +73,7 @@ export class ModificarMascotaFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formModifM.nombre = this.formModifM.nombre.trim();
     this.http.updateMascota(this.formModifM)
     .subscribe(
       () => {
